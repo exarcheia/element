@@ -111,6 +111,10 @@ export default {
     withHeader: {
       type: Boolean,
       default: true
+    },
+    isFocusedFirstElement: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -133,9 +137,11 @@ export default {
           document.body.appendChild(this.$el);
         }
         this.prevActiveElement = document.activeElement;
-        this.$nextTick(() => {
-          Utils.focusFirstDescendant(this.$refs.drawer);
-        });
+        if (this.isFocusedFirstElement) {
+          this.$nextTick(() => {
+            Utils.focusFirstDescendant(this.$refs.drawer);
+          });
+        }
       } else {
         if (!this.closed) this.$emit('close');
         this.$nextTick(() => {

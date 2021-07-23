@@ -53,8 +53,8 @@
         <div class="el-message-box__btns">
           <el-button
             :loading="cancelButtonLoading"
-            :class="[ cancelButtonClasses ]"
             v-if="showCancelButton"
+            :type="cancelButtonType || 'default'"
             :round="roundButton"
             size="small"
             @click.native="handleAction('cancel')"
@@ -64,7 +64,7 @@
           <el-button
             :loading="confirmButtonLoading"
             ref="confirm"
-            :class="[ confirmButtonClasses ]"
+            :type="confirmButtonType || 'primary'"
             v-show="showConfirmButton"
             :round="roundButton"
             size="small"
@@ -137,13 +137,6 @@
       icon() {
         const { type, iconClass } = this;
         return iconClass || (type && typeMap[type] ? `el-icon-${ typeMap[type] }` : '');
-      },
-
-      confirmButtonClasses() {
-        return `el-button--primary ${ this.confirmButtonClass }`;
-      },
-      cancelButtonClasses() {
-        return `${ this.cancelButtonClass }`;
       }
     },
 
@@ -317,9 +310,9 @@
         cancelButtonText: '',
         confirmButtonLoading: false,
         cancelButtonLoading: false,
-        confirmButtonClass: '',
+        confirmButtonType: '',
         confirmButtonDisabled: false,
-        cancelButtonClass: '',
+        cancelButtonType: '',
         editorErrorMessage: null,
         callback: null,
         dangerouslyUseHTMLString: false,

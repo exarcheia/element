@@ -2,29 +2,30 @@
   <el-popover
     v-bind="$attrs"
     v-model="visible"
+    :title="title"
     trigger="click"
   >
   <div class="el-popconfirm">
-    <p class="el-popconfirm__main">
+    <p class="el-popconfirm__main" v-if="text">
     <i
       v-if="!hideIcon"
       :class="icon"
       class="el-popconfirm__icon"
       :style="{color: iconColor}"
     ></i>
-      {{title}}
+      {{ text }}
     </p>
     <div class="el-popconfirm__action">
-      <el-button 
-        size="mini" 
-        :type="cancelButtonType" 
+      <el-button
+        :size="cancelButtonSize"
+        :type="cancelButtonType"
         @click="cancel"
       >
         {{cancelButtonText}}
       </el-button>
-      <el-button 
-        size="mini" 
-        :type="confirmButtonType" 
+      <el-button
+        :size="confirmButtonSize"
+        :type="confirmButtonType"
         @click="confirm"
       >
         {{confirmButtonText}}
@@ -44,7 +45,12 @@ export default {
   name: 'ElPopconfirm',
   props: {
     title: {
-      type: String
+      type: String,
+      default: ''
+    },
+    text: {
+      type: String,
+      default: ''
     },
     confirmButtonText: {
       type: String,
@@ -61,6 +67,14 @@ export default {
     cancelButtonType: {
       type: String,
       default: 'text'
+    },
+    confirmButtonSize: {
+      type: String,
+      default: 'mini'
+    },
+    cancelButtonSize: {
+      type: String,
+      default: 'mini'
     },
     icon: {
       type: String,

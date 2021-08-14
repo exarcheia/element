@@ -14,7 +14,19 @@
         :id="tooltipId"
         :aria-hidden="(disabled || !showPopper) ? 'true' : 'false'"
       >
-        <div class="el-popover__title" v-if="title" v-text="title"></div>
+        <div class="el-popover__header">
+          <slot name="title">
+          <div class="el-popover__title" v-if="title" v-text="title" />
+        </slot>
+        <button
+            type="button"
+            class="el-popover__headerbtn"
+            aria-label="Close"
+            v-if="showClose"
+            @click="doClose">
+          <i class="el-popover__close el-icon el-icon-close" />
+        </button>
+        </div>
         <slot>{{ content }}</slot>
       </div>
     </transition>
@@ -37,6 +49,10 @@ export default {
       type: String,
       default: 'click',
       validator: value => ['click', 'focus', 'hover', 'manual'].indexOf(value) > -1
+    },
+    showClose: {
+      type: Boolean,
+      default: false
     },
     openDelay: {
       type: Number,
@@ -161,7 +177,7 @@ export default {
     },
     handleBlur() {
       removeClass(this.referenceElm, 'focusing');
-      if (this.trigger === 'click' || this.trigger === 'focus') this.showPopper = false;
+      if (this.trigger === 'click' || this.trigger === 'focus') this.doClose();
     },
     handleMouseEnter() {
       clearTimeout(this._timer);
@@ -182,10 +198,10 @@ export default {
       clearTimeout(this._timer);
       if (this.closeDelay) {
         this._timer = setTimeout(() => {
-          this.showPopper = false;
+          this.doClose();
         }, this.closeDelay);
       } else {
-        this.showPopper = false;
+        this.doClose();
       }
     },
     handleDocumentClick(e) {
@@ -201,7 +217,7 @@ export default {
         reference.contains(e.target) ||
         !popper ||
         popper.contains(e.target)) return;
-      this.showPopper = false;
+      this.doClose();
     },
     handleAfterEnter() {
       this.$emit('after-enter');

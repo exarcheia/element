@@ -1,6 +1,6 @@
 {
   "name": "exarcheia-element",
-  "version": "2.18.4",
+  "version": "2.18.48",
   "description": "A Component Library for Vue.js.",
   "main": "lib/exarcheia-element.common.js",
   "files": [
@@ -63,6 +63,7 @@
     "async-validator": "~1.8.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.0",
     "deepmerge": "^1.2.0",
+    "lodash.debounce": "^4.0.8",
     "normalize-wheel": "^1.0.1",
     "resize-observer-polyfill": "^1.5.0",
     "throttle-debounce": "^1.0.1"

@@ -30,9 +30,6 @@
         :readonly="readonly"
         :autocomplete="autoComplete || autocomplete"
         ref="input"
-        @compositionstart="handleCompositionStart"
-        @compositionupdate="handleCompositionUpdate"
-        @compositionend="handleCompositionEnd"
         @input="handleInput"
         @focus="handleFocus"
         @blur="handleBlur"
@@ -88,9 +85,6 @@
       v-else
       :tabindex="tabindex"
       class="el-textarea__inner"
-      @compositionstart="handleCompositionStart"
-      @compositionupdate="handleCompositionUpdate"
-      @compositionend="handleCompositionEnd"
       @input="handleInput"
       ref="textarea"
       v-bind="$attrs"
@@ -112,7 +106,6 @@
   import Migrating from 'exarcheia-element/src/mixins/migrating';
   import calcTextareaHeight from './calcTextareaHeight';
   import merge from 'exarcheia-element/src/utils/merge';
-  import {isKorean} from 'exarcheia-element/src/utils/shared';
 
   export default {
     name: 'ElInput',
@@ -337,20 +330,20 @@
         this.focused = true;
         this.$emit('focus', event);
       },
-      handleCompositionStart() {
-        this.isComposing = true;
-      },
-      handleCompositionUpdate(event) {
-        const text = event.target.value;
-        const lastCharacter = text[text.length - 1] || '';
-        this.isComposing = !isKorean(lastCharacter);
-      },
-      handleCompositionEnd(event) {
-        if (this.isComposing) {
-          this.isComposing = false;
-          this.handleInput(event);
-        }
-      },
+      // handleCompositionStart() {
+      //   this.isComposing = true;
+      // },
+      // handleCompositionUpdate(event) {
+      //   const text = event.target.value;
+      //   const lastCharacter = text[text.length - 1] || '';
+      //   this.isComposing = !isKorean(lastCharacter);
+      // },
+      // handleCompositionEnd(event) {
+      //   if (this.isComposing) {
+      //     this.isComposing = false;
+      //     this.handleInput(event);
+      //   }
+      // },
       handleInput(event) {
         // should not emit input during composition
         // see: https://github.com/ElemeFE/element/issues/10516

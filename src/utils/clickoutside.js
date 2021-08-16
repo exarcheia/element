@@ -8,8 +8,12 @@ let startClick;
 let seed = 0;
 
 !Vue.prototype.$isServer && on(document, 'mousedown', e => (startClick = e));
-
 !Vue.prototype.$isServer && on(document, 'mouseup', e => {
+  nodeList.forEach(node => node[ctx].documentHandler(e, startClick));
+});
+
+!Vue.prototype.$isServer && on(document, 'touchstart', e => (startClick = e));
+!Vue.prototype.$isServer && on(document, 'touchend', e => {
   nodeList.forEach(node => node[ctx].documentHandler(e, startClick));
 });
 

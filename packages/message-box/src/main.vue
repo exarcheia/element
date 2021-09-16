@@ -56,7 +56,7 @@
             v-if="showCancelButton"
             :type="cancelButtonType || 'default'"
             :round="roundButton"
-            :size="cancelButtonSize || 'size'"
+            :size="cancelButtonSize || 'small'"
             @click.native="handleAction('cancel')"
             @keydown.enter="handleAction('cancel')">
             {{ cancelButtonText || t('el.messagebox.cancel') }}
@@ -67,7 +67,7 @@
             :type="confirmButtonType || 'primary'"
             v-show="showConfirmButton"
             :round="roundButton"
-            :size="confirmButtonSize || 'size'"
+            :size="confirmButtonSize || 'small'"
             @click.native="handleAction('confirm')"
             @keydown.enter="handleAction('confirm')">
             {{ confirmButtonText || t('el.messagebox.confirm') }}

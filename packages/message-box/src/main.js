@@ -22,6 +22,8 @@ const defaults = {
   confirmButtonHighlight: false,
   cancelButtonHighlight: false,
   confirmButtonText: '',
+  confirmButtonSize: '',
+  cancelButtonSize: '',
   cancelButtonText: '',
   confirmButtonType: '',
   cancelButtonType: '',

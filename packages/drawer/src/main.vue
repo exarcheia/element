@@ -133,6 +133,8 @@ export default {
       if (val) {
         this.closed = false;
         this.$emit('open');
+        document.documentElement.style.overflow = 'hidden';
+
         if (this.appendToBody) {
           document.body.appendChild(this.$el);
         }
@@ -158,6 +160,8 @@ export default {
     },
     afterLeave() {
       this.$emit('closed');
+      document.documentElement.style.overflow = '';
+
     },
     hide(cancel) {
       if (cancel !== false) {

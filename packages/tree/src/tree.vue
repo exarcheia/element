@@ -80,6 +80,10 @@
       nodeKey: String,
       checkStrictly: Boolean,
       defaultExpandAll: Boolean,
+      expandNodesDisabled: {
+        type: Array,
+        default: () => []
+      },
       expandOnClickNode: {
         type: Boolean,
         default: true
@@ -271,8 +275,10 @@
       },
 
       handleNodeExpand(nodeData, node, instance) {
-        this.broadcast('ElTreeNode', 'tree-node-expand', node);
-        this.$emit('node-expand', nodeData, node, instance);
+        if (!this.expandNodesDisabled.includes(nodeData[this.props.value])) {
+          this.broadcast('ElTreeNode', 'tree-node-expand', node);
+          this.$emit('node-expand', nodeData, node, instance);
+        }
       },
 
       updateKeyChildren(key, data) {

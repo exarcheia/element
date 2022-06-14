@@ -121,8 +121,9 @@
 
       <div
         class="el-picker-panel__footer"
-        v-show="footerVisible && currentView === 'date' || $slots.footer">
-        <slot name="footer">
+        ref="footer"
+        v-show="footerVisible && currentView === 'date' || customFooter">
+        <template v-if="!customFooter">
           <el-button
               v-if="isVisibleNowButton"
               size="mini"
@@ -139,7 +140,7 @@
               @click="confirm">
             {{ t('el.datepicker.confirm') }}
           </el-button>
-        </slot>
+        </template>
       </div>
     </div>
   </transition>
@@ -223,6 +224,12 @@ export default {
   },
 
   methods: {
+    initCustomFooter() {
+      if (this.customFooter) {
+        this.$refs.footer.appendChild(this.customFooter.$el);
+      }
+    },
+
     proxyTimePickerDataProperties() {
       const format = timeFormat => {this.$refs.timepicker.format = timeFormat;};
       const value = value => {this.$refs.timepicker.value = value;};
@@ -507,6 +514,7 @@ export default {
 
   data() {
     return {
+      customFooter: null,
       popperClass: '',
       saveButtonSize: 'mini',
       saveButtonType: 'default',

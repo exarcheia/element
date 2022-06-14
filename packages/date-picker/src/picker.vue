@@ -356,6 +356,12 @@ export default {
       type: String,
       default: 'default'
     },
+
+    footerPanel: {
+      type: Vue,
+      default: null
+    },
+
     size: String,
     format: String,
     valueFormat: String,
@@ -843,6 +849,7 @@ export default {
 
     mountPicker() {
       this.picker = new Vue(this.panel).$mount();
+      this.picker.customFooter = this.footerPanel;
       this.picker.isVisibleNowButton = this.isVisibleNowButton;
       this.picker.saveButtonSize = this.saveButtonSize;
       this.picker.saveButtonType = this.saveButtonType;
@@ -855,6 +862,7 @@ export default {
       this.picker.selectionMode = this.selectionMode;
       this.picker.unlinkPanels = this.unlinkPanels;
       this.picker.arrowControl = this.arrowControl || this.timeArrowControl || false;
+
       this.$watch('format', (format) => {
         this.picker.format = format;
       });
@@ -887,6 +895,14 @@ export default {
       updateOptions();
       this.unwatchPickerOptions = this.$watch('pickerOptions', () => updateOptions(), { deep: true });
       this.$el.appendChild(this.picker.$el);
+
+      this.$nextTick(() => {
+        if (typeof this.picker.initCustomFooter === 'function') {
+          console.log(this.picker);
+          this.picker.initCustomFooter();
+        }
+      });
+
       this.picker.resetView && this.picker.resetView();
 
       this.picker.$on('dodestroy', this.doDestroy);

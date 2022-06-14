@@ -121,23 +121,25 @@
 
       <div
         class="el-picker-panel__footer"
-        v-show="footerVisible && currentView === 'date'">
-        <el-button
-          v-if="isVisibleNowButton"
-          size="mini"
-          type="text"
-          class="el-picker-panel__link-btn"
-          @click="changeToNow"
-          v-show="selectionMode !== 'dates'">
-          {{ t('el.datepicker.now') }}
-        </el-button>
-        <el-button
-          :size="saveButtonSize"
-          :type="saveButtonType"
-          class="el-picker-panel__link-btn"
-          @click="confirm">
-          {{ t('el.datepicker.confirm') }}
-        </el-button>
+        v-show="footerVisible && currentView === 'date' || $slots.footer">
+        <slot name="footer">
+          <el-button
+              v-if="isVisibleNowButton"
+              size="mini"
+              type="text"
+              class="el-picker-panel__link-btn"
+              @click="changeToNow"
+              v-show="selectionMode !== 'dates'">
+            {{ t('el.datepicker.now') }}
+          </el-button>
+          <el-button
+              :size="saveButtonSize"
+              :type="saveButtonType"
+              class="el-picker-panel__link-btn"
+              @click="confirm">
+            {{ t('el.datepicker.confirm') }}
+          </el-button>
+        </slot>
       </div>
     </div>
   </transition>

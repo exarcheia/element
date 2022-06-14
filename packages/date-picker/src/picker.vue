@@ -898,7 +898,6 @@ export default {
 
       this.$nextTick(() => {
         if (typeof this.picker.initCustomFooter === 'function') {
-          console.log(this.picker);
           this.picker.initCustomFooter();
         }
       });

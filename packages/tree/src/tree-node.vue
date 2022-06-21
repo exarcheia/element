@@ -91,6 +91,10 @@
         }
       },
       props: {},
+      expandNodesDisabled: {
+        type: Array,
+        default: () => []
+      },
       renderContent: Function,
       renderAfterExpand: {
         type: Boolean,
@@ -216,8 +220,10 @@
       },
 
       handleChildNodeExpand(nodeData, node, instance) {
-        this.broadcast('ElTreeNode', 'tree-node-expand', node);
-        this.tree.$emit('node-expand', nodeData, node, instance);
+        if (!this.expandNodesDisabled.includes(nodeData[this.props.value])) {
+          this.broadcast('ElTreeNode', 'tree-node-expand', node);
+          this.tree.$emit('node-expand', nodeData, node, instance);
+        }
       },
 
       handleDragStart(event) {

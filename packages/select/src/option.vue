@@ -3,7 +3,7 @@
     @mouseenter="hoverItem"
     @click.stop="selectOptionClick"
     class="el-select-dropdown__item"
-    v-show="visible"
+    v-show="isVisibleOption"
     :class="{
       'selected': itemSelected,
       'is-disabled': disabled || groupDisabled || limitReached,
@@ -37,6 +37,11 @@
       disabled: {
         type: Boolean,
         default: false
+      },
+
+      hideItems: {
+        type: Array,
+        default: () => []
       }
     },
 
@@ -46,11 +51,21 @@
         groupDisabled: false,
         visible: true,
         hitState: false,
-        hover: false
+        hover: false,
+
+        hasHideItem: false
       };
     },
 
     computed: {
+      isVisibleOption() {
+        if (this.hideItems.length) {
+          return !this.hideItems.includes(this.value);
+        }
+
+        return this.visible;
+      },
+
       isObject() {
         return Object.prototype.toString.call(this.value).toLowerCase() === '[object object]';
       },
@@ -83,6 +98,8 @@
     },
 
     watch: {
+      hideItems: 'checkHideItems',
+
       currentLabel() {
         if (!this.created && !this.select.remote) this.dispatch('ElSelect', 'setSelected');
       },
@@ -98,6 +115,22 @@
     },
 
     methods: {
+      checkHideItems(items) {
+        if (items.includes(this.value) && !this.hasHideItem) {
+          this.filteredOptionsCount--;
+          this.visible = false;
+          this.hasHideItem = true;
+  
+          return true;
+        }
+
+        if (!items.includes(this.value) && this.hasHideItem) {
+          this.filteredOptionsCount++;
+          this.visible = true;
+          this.hasHideItem = false;
+        }
+      },
+
       isEqual(a, b) {
         if (!this.isObject) {
           return a === b;
@@ -147,6 +180,7 @@
       this.select.cachedOptions.push(this);
       this.select.optionsCount++;
       this.select.filteredOptionsCount++;
+      this.checkHideItems(this.hideItems);
 
       this.$on('queryChange', this.queryChange);
       this.$on('handleGroupDisabled', this.handleGroupDisabled);

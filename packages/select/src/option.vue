@@ -116,18 +116,20 @@
 
     methods: {
       checkHideItems(items) {
-        if (items.includes(this.value) && !this.hasHideItem) {
-          this.filteredOptionsCount--;
-          this.visible = false;
-          this.hasHideItem = true;
-  
-          return true;
-        }
+        if (items && Array.isArray(items)) {
+          if (items.includes(this.value) && !this.hasHideItem) {
+            this.filteredOptionsCount--;
+            this.visible = false;
+            this.hasHideItem = true;
 
-        if (!items.includes(this.value) && this.hasHideItem) {
-          this.filteredOptionsCount++;
-          this.visible = true;
-          this.hasHideItem = false;
+            return true;
+          }
+
+          if (!items.includes(this.value) && this.hasHideItem) {
+            this.filteredOptionsCount++;
+            this.visible = true;
+            this.hasHideItem = false;
+          }
         }
       },
 

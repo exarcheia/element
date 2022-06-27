@@ -3,7 +3,7 @@
     @mouseenter="hoverItem"
     @click.stop="selectOptionClick"
     class="el-select-dropdown__item"
-    v-show="isVisibleOption"
+    v-show="visible"
     :class="{
       'selected': itemSelected,
       'is-disabled': disabled || groupDisabled || limitReached,
@@ -58,14 +58,6 @@
     },
 
     computed: {
-      isVisibleOption() {
-        if (this.hideItems.length) {
-          return !this.hideItems.includes(this.value);
-        }
-
-        return this.visible;
-      },
-
       isObject() {
         return Object.prototype.toString.call(this.value).toLowerCase() === '[object object]';
       },
@@ -116,8 +108,10 @@
 
     methods: {
       checkHideItems(items) {
-        if (items && Array.isArray(items)) {
-          if (items.includes(this.value) && !this.hasHideItem) {
+        const copyItems = items || [];
+
+        if (Array.isArray(copyItems)) {
+          if (copyItems.includes(this.value) && !this.hasHideItem) {
             this.filteredOptionsCount--;
             this.visible = false;
             this.hasHideItem = true;
@@ -125,7 +119,7 @@
             return true;
           }
 
-          if (!items.includes(this.value) && this.hasHideItem) {
+          if (!copyItems.includes(this.value) && this.hasHideItem) {
             this.filteredOptionsCount++;
             this.visible = true;
             this.hasHideItem = false;
@@ -170,7 +164,8 @@
       },
 
       queryChange(query) {
-        this.visible = new RegExp(escapeRegexpString(query), 'i').test(this.currentLabel) || this.created;
+        this.visible = !this.hasHideItem ? new RegExp(escapeRegexpString(query), 'i').test(this.currentLabel) || this.created : false;
+  
         if (!this.visible) {
           this.select.filteredOptionsCount--;
         }

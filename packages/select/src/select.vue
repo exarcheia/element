@@ -112,7 +112,7 @@
           view-class="el-select-dropdown__list"
           ref="scrollbar"
           :class="{ 'is-empty': !allowCreate && query && filteredOptionsCount === 0 }"
-          v-show="options.length > 0 && !loading">
+          v-show="countVisibleOptions > 0 && !loading">
           <el-option
             :value="query"
             created
@@ -120,7 +120,7 @@
           </el-option>
           <slot></slot>
         </el-scrollbar>
-        <template v-if="emptyText && (!allowCreate || loading || (allowCreate && options.length === 0 ))">
+        <template v-if="emptyText && (!allowCreate || loading || (allowCreate && countVisibleOptions === 0 ))">
           <slot name="empty" v-if="$slots.empty"></slot>
           <p class="el-select-dropdown__empty" v-else>
             {{ emptyText }}
@@ -207,11 +207,15 @@ export default {
         if (this.filterable && this.query && this.options.length > 0 && this.filteredOptionsCount === 0) {
           return this.noMatchText || this.t('el.select.noMatch');
         }
-        if (this.options.length === 0) {
+        if (this.countVisibleOptions === 0) {
           return this.noDataText || this.t('el.select.noData');
         }
       }
       return null;
+    },
+
+    countVisibleOptions() {
+      return this.options.filter(option => option.visible).length;
     },
 
     showNewOption() {

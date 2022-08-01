@@ -58,8 +58,9 @@
         :aria-expanded="expanded"
       >
         <el-tree-node
-          :render-content="renderContent"
           v-for="child in node.childNodes"
+          :render-content="renderContent"
+          :props="props"
           :render-after-expand="renderAfterExpand"
           :show-checkbox="showCheckbox"
           :key="getNodeKey(child)"

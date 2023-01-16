@@ -38,6 +38,7 @@ import Popper from 'exarcheia-element/src/utils/vue-popper';
 import { on, off } from 'exarcheia-element/src/utils/dom';
 import { addClass, removeClass } from 'exarcheia-element/src/utils/dom';
 import { generateId } from 'exarcheia-element/src/utils/util';
+import selectedText from '../../../src/utils/selected-text';
 
 export default {
   name: 'ElPopover',
@@ -211,12 +212,15 @@ export default {
       if (!reference && this.$slots.reference && this.$slots.reference[0]) {
         reference = this.referenceElm = this.$slots.reference[0].elm;
       }
+
       if (!this.$el ||
         !reference ||
         this.$el.contains(e.target) ||
         reference.contains(e.target) ||
         !popper ||
-        popper.contains(e.target)) return;
+        popper.contains(e.target) ||
+        selectedText()) return;
+
       this.doClose();
     },
     handleAfterEnter() {
@@ -241,8 +245,6 @@ export default {
     off(reference, 'mousedown', this.doShow);
     off(reference, 'focusin', this.doShow);
     off(reference, 'focusout', this.doClose);
-    off(reference, 'mousedown', this.doShow);
-    off(reference, 'mouseup', this.doClose);
     off(reference, 'mouseleave', this.handleMouseLeave);
     off(reference, 'mouseenter', this.handleMouseEnter);
     off(document, 'click', this.handleDocumentClick);

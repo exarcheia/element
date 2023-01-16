@@ -14,6 +14,7 @@
       :node="child"
       :props="props"
       :render-after-expand="renderAfterExpand"
+      :expand-nodes-disabled="expandNodesDisabled"
       :show-checkbox="showCheckbox"
       :key="getNodeKey(child)"
       :render-content="renderContent"
@@ -274,11 +275,13 @@
         this.store.insertAfter(data, refNode);
       },
 
+      handleImitationNodeClick(nodeKey) {
+        this.broadcast('ElTreeNode', 'imitation-node-click', nodeKey);
+      },
+
       handleNodeExpand(nodeData, node, instance) {
-        if (!this.expandNodesDisabled.includes(nodeData[this.props.value])) {
-          this.broadcast('ElTreeNode', 'tree-node-expand', node);
-          this.$emit('node-expand', nodeData, node, instance);
-        }
+        this.broadcast('ElTreeNode', 'tree-node-expand', node);
+        this.$emit('node-expand', nodeData, node, instance);
       },
 
       updateKeyChildren(key, data) {

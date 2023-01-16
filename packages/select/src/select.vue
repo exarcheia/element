@@ -2,7 +2,7 @@
   <div
     class="el-select"
     :class="[selectSize ? 'el-select--' + selectSize : '']"
-    @click.stop="toggleMenu"
+    @click="toggleMenu"
     v-clickoutside="handleClose">
     <div
       class="el-select__tags"

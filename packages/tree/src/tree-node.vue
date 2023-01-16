@@ -177,9 +177,11 @@
         store.setCurrentNode(this.node);
         this.tree.$emit('current-change', store.currentNode ? store.currentNode.data : null, store.currentNode);
         this.tree.currentNode = this;
-        if (this.tree.expandOnClickNode) {
-          this.handleExpandIconClick();
+
+        if (!this.expandNodesDisabled.includes(this.node.data[this.props.value]) && this.tree.expandOnClickNode) {
+            this.handleExpandIconClick();
         }
+
         if (this.tree.checkOnClickNode && !this.node.disabled) {
           this.handleCheckChange(null, {
             target: { checked: !this.node.checked }
@@ -221,10 +223,12 @@
       },
 
       handleChildNodeExpand(nodeData, node, instance) {
-        if (!this.expandNodesDisabled.includes(nodeData[this.props.value])) {
           this.broadcast('ElTreeNode', 'tree-node-expand', node);
           this.tree.$emit('node-expand', nodeData, node, instance);
-        }
+      },
+
+      handleImitationNodeClick(nodeKey) {
+        this.broadcast('ElTreeNode', 'imitation-node-click', nodeKey);
       },
 
       handleDragStart(event) {
@@ -273,6 +277,14 @@
         this.expanded = true;
         this.childNodeRendered = true;
       }
+
+      this.$on('imitation-node-click', nodeKey => {
+        if(this.node.data[props.value] === nodeKey) {
+          this.handleClick();
+        } else {
+          this.handleImitationNodeClick(nodeKey);
+        }
+      });
 
       if(this.tree.accordion) {
         this.$on('tree-node-expand', node => {

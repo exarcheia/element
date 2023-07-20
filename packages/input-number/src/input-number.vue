@@ -43,6 +43,12 @@
       @focus="handleFocus"
       @input="handleInput"
       @change="handleInputChange">
+      <template slot="prefix">
+        <slot name="prefix"></slot>
+      </template>
+      <template slot="suffix">
+        <slot name="suffix"></slot>
+      </template>
     </el-input>
   </div>
 </template>

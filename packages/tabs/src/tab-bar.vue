@@ -43,11 +43,15 @@
             }
           });
 
-          const transform = `translate${firstUpperCase(sizeDir)}(${offset}px)`;
           style[sizeName] = tabSize + 'px';
-          style.transform = transform;
-          style.msTransform = transform;
-          style.webkitTransform = transform;
+
+          if (this.tabs.length > 1) {
+            const transform = `translate${firstUpperCase(sizeDir)}(${offset}px)`;
+  
+            style.transform = transform;
+            style.msTransform = transform;
+            style.webkitTransform = transform;
+          }
 
           return style;
         }

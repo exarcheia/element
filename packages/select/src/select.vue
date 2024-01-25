@@ -287,6 +287,10 @@ export default {
     remoteMethod: Function,
     filterMethod: Function,
     multiple: Boolean,
+    multipleClearQuery: {
+      type: Boolean,
+      default: true
+    },
     multipleLimit: {
       type: Number,
       default: 0
@@ -359,7 +363,7 @@ export default {
         } else {
           this.currentPlaceholder = this.cachedPlaceHolder;
         }
-        if (this.filterable && !this.reserveKeyword) {
+        if (this.filterable && !this.reserveKeyword && !this.multipleClearQuery) {
           this.query = '';
           this.handleQueryChange(this.query);
         }
@@ -702,7 +706,7 @@ export default {
         }
         this.$emit('input', value);
         this.emitChange(value);
-        if (option.created) {
+        if (option.created && !this.multipleClearQuery) {
           this.query = '';
           this.handleQueryChange('');
           this.inputLength = 20;

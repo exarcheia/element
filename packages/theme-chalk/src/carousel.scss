@@ -58,7 +58,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    z-index: #{$--index-normal + 1};
+    z-index: #{calc($--index-normal + 1)};
 
     @include m(horizontal) {
       bottom: 0;

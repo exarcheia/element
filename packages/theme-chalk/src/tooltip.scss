@@ -35,7 +35,7 @@
     }
 
     &[x-placement^="top"] {
-      margin-bottom: #{$--tooltip-arrow-size + 6px};
+      margin-bottom: #{calc($--tooltip-arrow-size + 6px)};
     }
 
     &[x-placement^="top"] .popper__arrow {
@@ -52,7 +52,7 @@
     }
 
     &[x-placement^="bottom"] {
-      margin-top: #{$--tooltip-arrow-size + 6px};
+      margin-top: #{calc($--tooltip-arrow-size + 6px)};
     }
 
     &[x-placement^="bottom"] .popper__arrow {
@@ -69,7 +69,7 @@
     }
 
     &[x-placement^="right"] {
-      margin-left: #{$--tooltip-arrow-size + 6px};
+      margin-left: #{calc($--tooltip-arrow-size + 6px)};
     }
 
     &[x-placement^="right"] .popper__arrow {

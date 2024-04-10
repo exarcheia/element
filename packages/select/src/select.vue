@@ -487,7 +487,7 @@ export default {
       this.hoverIndex = -1;
       if (this.multiple && this.filterable) {
         this.$nextTick(() => {
-          if(this.$refs.input) {
+          if (this.$refs.input) {
             const length = this.$refs.input.value.length * 15 + 20;
             this.inputLength = this.collapseTags ? Math.min(50, length) : length;
             this.managePlaceholder();

@@ -3,6 +3,7 @@
     v-bind="$attrs"
     v-model="visible"
     :title="title"
+    :popper-class="popperClass"
     trigger="click"
   >
   <div class="el-popconfirm">
@@ -45,6 +46,10 @@ export default {
   name: 'ElPopconfirm',
   props: {
     title: {
+      type: String,
+      default: ''
+    },
+    popperClass: {
       type: String,
       default: ''
     },

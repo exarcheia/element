@@ -905,9 +905,9 @@ export default {
       }
     });
 
-    this.checkDefaultFirstOption();
-
     this.setSelected();
+
+    this.checkDefaultFirstOption();
   },
 
   beforeDestroy() {
